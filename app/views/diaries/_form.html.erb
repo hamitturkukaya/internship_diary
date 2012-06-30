@@ -1,0 +1,16 @@
+<%= simple_form_for @diary, :html => { :class => 'form-horizontal' } do |f| %>
+
+  <%= f.input :internship_id do%>
+  	<%= f.select :internship_id, Internship.find_all_by_user_id(@user).collect {|p| [ p.title, p.id ] }, {:include_blank =>'None'} %>
+  <% end %> 
+    
+  <%= f.input :name %>
+  <%= f.input :content %>
+  <%= f.input :private %>
+  
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                diaries_path, :class => 'btn' %>
+  </div>
+<% end %>

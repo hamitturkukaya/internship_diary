@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user: 
+  title: MyString
+  company: MyString
+  internship_type: MyString
+  start_date: 2012-06-30
+  end_date: 2012-06-30
+
+two:
+  user: 
+  title: MyString
+  company: MyString
+  internship_type: MyString
+  start_date: 2012-06-30
+  end_date: 2012-06-30

@@ -1,0 +1,14 @@
+<% if user_signed_in? %>
+  <% if Internship.find(@diary.internship_id).user_id == current_user.id %>
+<%- model_class = @diary.class -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human,
+                                   :default => "Edit #{model_class.model_name.human}") %></h1>
+</div>
+<%= render :partial => 'form' %>
+<% else %>
+ <p> Bu sayfayı Görüntülemeye Yetkiniz Yok</p>
+ <% end %>
+ <% else %>
+ <p> Bu sayfayı Görüntülemeye Yetkiniz Yok</p>
+<% end %>

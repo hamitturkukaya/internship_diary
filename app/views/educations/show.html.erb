@@ -1,0 +1,20 @@
+<%- model_class = @education.class -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:university) %>:</strong></dt>
+  <dd><%= @education.university %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:faculty) %>:</strong></dt>
+  <dd><%= @education.faculty %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:department) %>:</strong></dt>
+  <dd><%= @education.department %></dd>
+</dl>
+
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              home_index_path, :class => 'btn'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_education_path(@education), :class => 'btn' %>
+</div>

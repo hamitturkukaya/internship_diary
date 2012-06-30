@@ -1,0 +1,35 @@
+<h1>Home#index</h1>
+
+<p>Find me in app/views/home/index.html.erb</p>
+<%- model_class = Diary.new.class -%>
+<div class="page-header">
+  <h1>Public Diaries </h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Detail</th>
+      <th><%= model_class.human_attribute_name(:internship_id) %></th>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:content) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @diaries.each do |diary| %>
+      <tr>
+        <td><%= link_to t('.Show', :default => t("helpers.links.show")),
+            diary_path(diary),
+            :class => 'btn btn-success' %>
+        </td>
+        <td><%= Internship.find(diary.internship_id).title %></td>
+        <td><%= diary.name %></td>
+        <td><%= diary.content %></td>
+        <td><%=l diary.created_at %></td>
+      </tr>
+      
+    <% end %>
+  </tbody>
+  
+  <%= will_paginate @diaries %>
+</table>

@@ -1,0 +1,115 @@
+<% if @diary.private == false %>
+<div id="social">
+<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="internship-diary">Tweet</a>
+        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
+        <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/tr_TR/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-send="false" data-layout="button_count" data-width="80" data-show-faces="false" data-font="arial"></div>
+ 
+
+     
+ </div>
+<%- model_class = @diary.class -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+  
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:internship_id) %>:</strong></dt>
+  <dd><%= Internship.find(@diary.internship_id).title %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+  <dd><%= @diary.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:private) %>:</strong></dt>
+  <dd><% if @diary.private == true  %>
+           <p>Private</p>
+      <% else %> 
+           <p>Public</p>
+      <%end%>
+  </dd>
+  <dt><strong><%= model_class.human_attribute_name(:content) %>:</strong></dt>
+  <dd><%= @diary.content %></dd>
+</dl>
+<div class="form-actions">
+<% if user_signed_in? %>
+  <% if Internship.find(@diary.internship_id).user_id == current_user.id %>
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              diaries_path, :class => 'btn'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_diary_path(@diary), :class => 'btn' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              diary_path(@diary),
+              :method => 'delete',
+              :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
+              :class => 'btn btn-danger' %>
+  <%= link_to t(' .print', :default => t("helpers.links.print")),
+              diary_path(@diary, :format => 'pdf'), :class => 'btn btn-success icon-print btn-large print'%>
+            
+ </div>
+   <% end %>
+ <% end %>
+
+<div id="newcomment">
+	<h2>Comments</h2>
+	<%= render @diary.comments %>
+</div>
+<% if user_signed_in? %>
+<div id="listcomment">
+	<h2>Add new comment:</h2>
+	<%= render "comments/form" %>
+</div>
+<%end%>
+<%else%>
+<% if user_signed_in? %>
+	<% if Internship.find(@diary.internship_id).user_id == current_user.id %>
+		<%- model_class = @diary.class -%>
+		<div class="page-header">
+		  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+		</div>
+		
+		<dl class="dl-horizontal">
+		  <dt><strong><%= model_class.human_attribute_name(:internship_id) %>:</strong></dt>
+		  <dd><%= Internship.find(@diary.internship_id).title %></dd>
+		  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+		  <dd><%= @diary.name %></dd>
+		  <dt><strong><%= model_class.human_attribute_name(:content) %>:</strong></dt>
+		  <dd><%= markdown(@diary.content) %></dd>
+		  <dt><strong><%= model_class.human_attribute_name(:private) %>:</strong></dt>
+		  <dd><% if @diary.private == true  %>
+		           <p>Private</p>
+		      <% else %> 
+		           <p>Public</p>
+		      <%end%>
+		  </dd>
+		</dl>
+		<div class="form-actions">
+		  <%= link_to t('.back', :default => t("helpers.links.back")),
+			      diaries_path, :class => 'btn'  %>
+		  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+			      edit_diary_path(@diary), :class => 'btn' %>
+		  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+			      diary_path(@diary),
+			      :method => 'delete',
+			      :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
+			      :class => 'btn btn-danger' %>
+		   <%= link_to t(' .print', :default => t("helpers.links.print")),
+              diary_path(@diary, :format => 'pdf'), :class => 'btn btn-success icon-print btn-large print'%>
+			
+		 </div>
+	<%else%>
+	<p> Bu Günlük Private Olarak İşaretlenmiştir.</p>
+	<p> Görme Yetkiniz Yok.</p>
+	<% end %>
+	<%else%>
+	<p> Bu Günlük Private Olarak İşaretlenmiştir.</p>
+	<p> Görme Yetkiniz Yok.</p>
+<% end %>
+<%end%>
+
+

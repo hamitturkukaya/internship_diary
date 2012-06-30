@@ -1,0 +1,58 @@
+<%if user_signed_in? %>
+<%- model_class = Diary.new.class -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+</div>
+
+
+<table class="table table-striped">
+	<%= will_paginate @diaries %>
+  <thead>
+    <tr>
+      <th>Detail</th>
+      <th><%= model_class.human_attribute_name(:internship_id) %></th>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:content) %></th>
+      <th><%= model_class.human_attribute_name(:private) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @diaries.each do |diary| %>
+      <tr>
+        <td><%= link_to t('.Show', :default => t("helpers.links.show")),
+            diary_path(diary),
+            :class => 'btn btn-success' %>
+        </td>
+        <td><%= Internship.find(diary.internship_id).title %></td>
+        <td><%= diary.name %></td>
+        <td><%= diary.content %></td>
+        <td><% if diary.private==true  %>
+        	   <p>Private</p>
+        	<% else %> 
+        	   <p>Public</p>
+            <%end%>
+        </td>
+        <td><%=l diary.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_diary_path(diary), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      diary_path(diary),
+                      :method => :delete,
+                      :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>    
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_diary_path,
+            :class => 'btn btn-primary' %>
+
+<%else%>
+<p>Lütfen Giriş yapınız!</p>
+<%end%>

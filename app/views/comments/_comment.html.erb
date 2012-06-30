@@ -1,0 +1,15 @@
+<p>
+  <b>Date:</b>
+  <%= comment.created_at %>
+</p>
+
+<p>
+  <b>Commenter:</b>
+  <%= User.find(comment.user_id).name %>
+</p>
+ 
+<p>
+  <b>Comment:</b>
+  <%= markdown(comment.comment) %>
+</p>
+<hr />

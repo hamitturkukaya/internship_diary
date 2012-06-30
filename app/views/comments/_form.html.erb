@@ -1,0 +1,7 @@
+<%= simple_form_for ([@diary, @diary.comments.build]), :html => { :class => 'form-horizontal' } do |f| %>
+
+<%= f.input :comment %>
+<div class="form-actions">
+  <%= f.submit %>
+</div>
+<% end %>
